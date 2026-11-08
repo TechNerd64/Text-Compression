@@ -9,5 +9,6 @@ def compress(file_path):
 
     tokens = re.findall(r"\w+|[^\w\s]|\s+", text)
 
-    print(tokens)
-
+    print("Tokens:")
+    for i in range(len(tokens)):
+        print(f"Token {i}: '{tokens[i]}'")

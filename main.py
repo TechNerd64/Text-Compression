@@ -3,13 +3,11 @@ import sys
 import compression
 
 def main():
-    if len(sys.argv < 2):
+    if len(sys.argv) < 2:
         print("Usage: python main.py <file_path>")
         return
 
-    operation  = sys.argv[1]
-    file_path = sys.argv[2]
-
+    file_path = sys.argv[1]
     # Validate input
     if not os.path.isfile(file_path):
         print(f"Error: File '{file_path}' does not exist.")
@@ -19,13 +17,10 @@ def main():
         return
 
     try:
-        if operation == "compress":
-            compression.compress(file_path)
-        else:
-            print("Error: Invalid operation. Use 'compress' to compress the file.")
-
+        compression.compress(file_path)
     except Exception as error:
         print(f"An error occurred: {error}")
+        return
 
 
 if __name__ == "__main__":
