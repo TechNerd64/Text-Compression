@@ -1,4 +1,4 @@
-
+import os
 import re
 
 # Load character dictionary
@@ -65,4 +65,18 @@ def compress(file_path):
     print("- compressed_data.txt")
     print("- compressed_word-reference.txt")
     print("- compressed_character-reference.txt")
+    print()
+    print(f"Comparing to original file size...")
+    compare_file_sizes(file_path, "compressed_data.txt")
+
+def compare_file_sizes(original_file, compressed_file):
+    original_size = os.path.getsize(original_file)
+    compressed_size = os.path.getsize(compressed_file)
+
+    print(f"Original file size: {original_size} bytes")
+    print(f"Compressed file size: {compressed_size} bytes")
+
+    percentage = (compressed_size / original_size) * 100 if original_size > 0 else 0
+    print(f"Compressed file is {percentage:.2f}% of the original file size.")
+
 
