@@ -1,4 +1,5 @@
 *.txt
+!dictionary.txt
 
 ## From internet vvv
 
