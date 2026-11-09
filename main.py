@@ -1,23 +1,43 @@
 import os 
-import sys
+import hashlib
 import compression
 import decompression
 
 def main():
-    operation = input("Enter operation (compress/decompress): ").strip().lower()
+    operation = input("Enter operation (compress/decompress/compare): ").strip().lower()
     if operation == "compress":
-        file_path = input("Enter the path to the input file: ").strip()
-        # Validate input
-        if not os.path.isfile(file_path):
-            print(f"Error: File '{file_path}' does not exist.")
-            return
-        if not file_path.endswith('.txt'):
-            print("Error: Input file must be a .txt file.")
-            return
+        while True:
+            file_path = input("Enter the path of the text file to compress: ").strip()
+            if os.path.isfile(file_path):
+                if not file_path.lower().endswith(".txt"):
+                    print("Error: The file must be a .txt file. Please try again.")
+                    continue
+                else:
+                    break
+            else:
+                print("Invalid file path. Please try again.")
+    
         compression.compress(file_path)
     elif operation == "decompress":
         decompression.decompress()
+    elif operation == "compare":
+        original_file = input("Enter the path of the original text file: ").strip()
+        compressed_file = input("Enter the path of the decompressed data file: ").strip()
+        if os.path.isfile(original_file) and os.path.isfile(compressed_file):
+            file1 = get_hash(original_file)
+            file2 = get_hash(compressed_file)
+            if file1 == file2:
+                print("The files are identical.")
+        else:
+            print("One or both file paths are invalid. Please try again.")
 
+def get_hash(file_path):
+    ## Calculate the SHA-256 hash of a file
+    sha256_hash = hashlib.sha256()
+    with open(file_path, "rb") as f:
+        for byte_block in iter(lambda: f.read(4096), b""):
+            sha256_hash.update(byte_block)
+    return sha256_hash.hexdigest()
 
 if __name__ == "__main__":
     main()
