@@ -52,7 +52,7 @@ def compress(file_path):
     # Write original word references
     with open("compressed_word-reference.txt", "w", encoding="utf-8") as file:
         for word in word_reference:
-            file.write(word + "\n")
+            file.write(repr(word) + "\n")
 
     # Write character references
     with open("compressed_character-reference.txt", "w", encoding="utf-8") as file:
