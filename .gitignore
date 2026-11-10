@@ -1,5 +1,7 @@
 *.txt
 !dictionary.txt
+!requirements.txt
+
 
               #  |||
 ## From internet vvv
