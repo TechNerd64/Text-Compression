@@ -1,5 +1,11 @@
 import os
 import re
+from colorama import Fore, Style, Back, just_fix_windows_console, init
+
+# Initialize colorama for Windows compatibility
+just_fix_windows_console()
+## start color auto reset
+init(autoreset=True)
 
 # Load character dictionary
 dictionary = []
@@ -16,7 +22,7 @@ def compress_token(token, references):
 
     # Check dictionary capacity
     if len(references) >= len(dictionary):
-        raise ValueError("Dictionary exhausted!")
+        raise ValueError(Fore.RED + "Dictionary exhausted!")
 
     # Assign a new code
     code = dictionary[len(references)]

@@ -1,4 +1,3 @@
-import os
 import ast
 
 def load_references():
