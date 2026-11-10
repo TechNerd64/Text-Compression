@@ -2,7 +2,9 @@ import os
 import hashlib
 import compression
 import decompression
-
+from colorama import Fore, Style, Back, just_fix_windows_console, init
+init(autoreset=True)
+just_fix_windows_console()
 def main():
     operation = input("Enter operation (compress/decompress/compare): ").strip().lower()
     if operation == "compress":

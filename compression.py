@@ -22,7 +22,7 @@ def compress_token(token, references):
 
     # Check dictionary capacity
     if len(references) >= len(dictionary):
-        raise ValueError(Fore.RED + "Dictionary exhausted!")
+        raise ValueError(Fore.RED + "Dictionary exhausted!" + Style.RESET_ALL)
 
     # Assign a new code
     code = dictionary[len(references)]
@@ -65,17 +65,19 @@ def compress(file_path):
         for code in word_reference.values():
             file.write(code + "\n")
 
-    print("Compression completed successfully!")
+    print(Fore.GREEN + "Compression completed successfully!")
     print(f"Unique tokens: {len(word_reference)}")
     print("Generated:")
     print("- compressed_data.txt")
     print("- compressed_word-reference.txt")
-    print("- compressed_character-reference.txt")
-    print()
-    print(f"Comparing to original file size...")
+    print("- compressed_character-reference.txt" + "\n")
+    print("Comparing to original file size...")
     compare_file_sizes(file_path, "compressed_data.txt")
 
 def compare_file_sizes(original_file, compressed_file):
+    if not os.path.isfile(original_file) or not os.path.isfile(compressed_file):
+        print(Fore.RED + "Error: One or both file paths are invalid. Cannot compare sizes.")
+        return
     original_size = os.path.getsize(original_file)
     compressed_size = os.path.getsize(compressed_file)
 
@@ -83,6 +85,11 @@ def compare_file_sizes(original_file, compressed_file):
     print(f"Compressed file size: {compressed_size} bytes")
 
     percentage = (compressed_size / original_size) * 100 if original_size > 0 else 0
-    print(f"Compressed file is {percentage:.2f}% of the original file size.")
+    if percentage < 100:
+        print(f"Compressed file is " + Fore.GREEN + f"{percentage:.2f}%" + Style.RESET_ALL + " of the original file size.")
+    elif percentage == 100:
+        print(f"Compressed file is " + Fore.YELLOW + f"{percentage:.2f}%" + Style.RESET_ALL + " of the original file size.")
+    else:
+        print(f"Compressed file is " + Fore.RED + f"{percentage:.2f}%" + Style.RESET_ALL + " of the original file size.")
 
 
