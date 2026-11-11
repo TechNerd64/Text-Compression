@@ -31,6 +31,8 @@ Then choose one of the avaliable operations when prompted:
 |decompress|Restores a previously compressed file.|
 |compare|Compare two files using SHA-256 hashes.|
 
+After, the program will prompt you for the next steps!
+
 ## Generated Files
 Compression Produces three distinct files:
 |File|Description|
@@ -38,3 +40,4 @@ Compression Produces three distinct files:
 |compressed_data.txt|Contains the compacted, encoded text.|
 |compressed_word-reference.txt|Stores the original reference tokens.|
 |compressed_character-reference.txt|Stores the corresponding character codes.|
+
