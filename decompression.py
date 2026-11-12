@@ -16,7 +16,7 @@ def load_references():
     with open(get_path("compressed_word-reference.txt"), "r", encoding="utf-8") as file:
             words = [ast.literal_eval(line) for line in file]
 
-    with open(get_path()"compressed_character-reference.txt"), "r", encoding="utf-8") as file:
+    with open(get_path("compressed_character-reference.txt"), "r", encoding="utf-8") as file:
             codes = [line.rstrip("\r\n") for line in file]
 
     # Validate that the number of words and codes match
