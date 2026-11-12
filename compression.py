@@ -1,4 +1,5 @@
 import os
+import sys
 import re
 from colorama import Fore, Style, Back, just_fix_windows_console, init
 
@@ -10,7 +11,7 @@ init(autoreset=True)
 # Load character dictionary
 dictionary = []
 
-with open("dictionary.txt", "r", encoding="utf-8") as file:
+with open(get_path("dictionary.txt"), "r", encoding="utf-8") as file:
     dictionary = [line.rstrip("\r\n") for line in file if line.rstrip("\r\n")]
 
 
@@ -72,7 +73,7 @@ def compress(file_path):
     print("- compressed_word-reference.txt")
     print("- compressed_character-reference.txt" + "\n")
     print("Comparing to original file size...")
-    compare_file_sizes(file_path, "compressed_data.txt", "compressed_word-reference.txt", "compressed_character-reference.txt")
+    compare_file_sizes(get_path(file_path), get_path("compressed_data.txt"), get_path("compressed_word-reference.txt"), get_path("compressed_character-reference.txt"))
 
 def compare_file_sizes(original_file, compressed_file, word_reference_file, character_reference_file):
     if not all(os.path.isfile(path) for path in [original_file, compressed_file, word_reference_file, character_reference_file]):
@@ -93,3 +94,8 @@ def compare_file_sizes(original_file, compressed_file, word_reference_file, char
         print(f"Compressed file is " + Fore.RED + f"{percentage:.2f}%" + Style.RESET_ALL + " of the original file size.")
 
 
+def get_path(relative_path):
+    # Check if running as a compiled PyInstaller bundle
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, relative_path)
+    return os.path.join(os.path.abspath("."), relative_path)
