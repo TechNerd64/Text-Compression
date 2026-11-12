@@ -45,5 +45,5 @@ Compression Produces three distinct files:
 ## Coming Up with the Idea
 So I came up with the idea around ~2 weeks ago, in which I wanted to build a Scratch project that could store the entirity of the english Bible locally.  But due to being on a OSWars team that directly faced the strict project.json limits of Scratch project, I knew compression was required.  Thus, I began researching compression algorithms, but then, in a CS50 lecture about C dictionaries, I had the bright idea, "Wait, why not just make a literal dictionary with single character tokens?"  And, that idea made this project.  
 
-## What was Challenging or New?
+## What was Challenging or New to me?
 There were certainly some new things I had to learn with this project, such as how to properly manage loaded files, terminal text color with colorama, and finally, how to compile project using pyinstaller while including something like dictionary.txt

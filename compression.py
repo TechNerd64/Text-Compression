@@ -72,14 +72,14 @@ def compress(file_path):
     print("- compressed_word-reference.txt")
     print("- compressed_character-reference.txt" + "\n")
     print("Comparing to original file size...")
-    compare_file_sizes(file_path, "compressed_data.txt")
+    compare_file_sizes(file_path, "compressed_data.txt", "compressed_word-reference.txt", "compressed_character-reference.txt")
 
-def compare_file_sizes(original_file, compressed_file):
-    if not os.path.isfile(original_file) or not os.path.isfile(compressed_file):
-        print(Fore.RED + "Error: One or both file paths are invalid. Cannot compare sizes.")
+def compare_file_sizes(original_file, compressed_file, word_reference_file, character_reference_file):
+    if not all(os.path.isfile(path) for path in [original_file, compressed_file, word_reference_file, character_reference_file]):
+        print(Fore.RED + "Error: One or more file paths are invalid. Cannot compare sizes.")
         return
     original_size = os.path.getsize(original_file)
-    compressed_size = os.path.getsize(compressed_file)
+    compressed_size = os.path.getsize(compressed_file) + os.path.getsize(word_reference_file) + os.path.getsize(character_reference_file)
 
     print(f"Original file size: {original_size} bytes")
     print(f"Compressed file size: {compressed_size} bytes")
