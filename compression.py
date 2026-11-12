@@ -1,3 +1,4 @@
+
 import os
 import sys
 import re
@@ -8,11 +9,25 @@ just_fix_windows_console()
 ## start color auto reset
 init(autoreset=True, strip=False)
 
+
 def get_path(relative_path):
     # Check if running as a compiled PyInstaller bundle
     if hasattr(sys, '_MEIPASS'):
         return os.path.join(sys._MEIPASS, relative_path)
-    return os.path.join(os.path.abspath("."), relative_path)
+
+    return os.path.join(os.path.dirname(os.path.abspath(__file__)), relative_path)
+
+
+def output_path(relative_path):
+    # Get the directory containing the executable or script
+    if getattr(sys, 'frozen', False):
+        base_path = os.path.dirname(sys.executable)
+    else:
+        base_path = os.path.dirname(os.path.abspath(__file__))
+
+    return os.path.join(base_path, relative_path)
+
+
 # Load character dictionary
 dictionary = []
 
@@ -39,6 +54,9 @@ def compress_token(token, references):
 
 def compress(file_path):
 
+    # Convert input path to absolute path
+    file_path = os.path.abspath(file_path)
+
     # Store token-to-code references
     word_reference = {}
 
@@ -57,17 +75,22 @@ def compress(file_path):
     for token in tokens:
         compressed_tokens.append(compress_token(token, word_reference))
 
+    # Define output file paths
+    compressed_file = output_path("compressed_data.txt")
+    word_reference_file = output_path("compressed_word-reference.txt")
+    character_reference_file = output_path("compressed_character-reference.txt")
+
     # Write compressed data
-    with open("compressed_data.txt", "w", encoding="utf-8") as file:
+    with open(compressed_file, "w", encoding="utf-8") as file:
         file.write("".join(compressed_tokens))
 
     # Write original word references
-    with open("compressed_word-reference.txt", "w", encoding="utf-8") as file:
+    with open(word_reference_file, "w", encoding="utf-8") as file:
         for word in word_reference:
             file.write(repr(word) + "\n")
 
     # Write character references
-    with open("compressed_character-reference.txt", "w", encoding="utf-8") as file:
+    with open(character_reference_file, "w", encoding="utf-8") as file:
         for code in word_reference.values():
             file.write(code + "\n")
 
@@ -78,12 +101,20 @@ def compress(file_path):
     print("- compressed_word-reference.txt")
     print("- compressed_character-reference.txt" + "\n")
     print("Comparing to original file size...")
-    compare_file_sizes(get_path(file_path), get_path("compressed_data.txt"), get_path("compressed_word-reference.txt"), get_path("compressed_character-reference.txt"))
+
+    compare_file_sizes(
+        file_path,
+        compressed_file,
+        word_reference_file,
+        character_reference_file
+    )
+
 
 def compare_file_sizes(original_file, compressed_file, word_reference_file, character_reference_file):
     if not all(os.path.isfile(path) for path in [original_file, compressed_file, word_reference_file, character_reference_file]):
         print(Fore.RED + "Error: One or more file paths are invalid. Cannot compare sizes.")
         return
+
     original_size = os.path.getsize(original_file)
     compressed_size = os.path.getsize(compressed_file) + os.path.getsize(word_reference_file) + os.path.getsize(character_reference_file)
 
@@ -91,6 +122,7 @@ def compare_file_sizes(original_file, compressed_file, word_reference_file, char
     print(f"Compressed file size: {compressed_size} bytes")
 
     percentage = (compressed_size / original_size) * 100 if original_size > 0 else 0
+
     if percentage < 100:
         print(f"Compressed file is " + Fore.GREEN + f"{percentage:.2f}%" + Style.RESET_ALL + " of the original file size.")
     elif percentage == 100:
