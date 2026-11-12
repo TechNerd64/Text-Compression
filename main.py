@@ -6,7 +6,14 @@ from colorama import Fore, Style, Back, just_fix_windows_console, init
 init(autoreset=True)
 just_fix_windows_console()
 def main():
-    operation = input("Enter operation (compress/decompress/compare): ").strip().lower()
+    print("Welcome to the Text Compression by TechNerd64")
+    while True:
+        operation = input("Enter operation (compress/decompress/compare/help): ").strip().lower()
+        if operation in ["compress", "decompress", "compare", "help"]:
+            break
+        else:
+            print(Fore.RED + "Invalid operation. Please choose from the options below vvv")
+            continue
     if operation == "compress":
         while True:
             file_path = input("Enter the path of the text file to compress: ").strip()
@@ -32,6 +39,12 @@ def main():
                 print("The files are identical.")
         else:
             print("One or both file paths are invalid. Please try again.")
+    elif operation == "help":
+        print("Available operations:")
+        print("- compress: Compress a text file.")
+        print("- decompress: Decompress the previously compressed data.")
+        print("- compare: Compare the original and decompressed files for integrity.")
+        print("- help: SShow this help message ;)")
 
 def get_hash(file_path):
     ## Calculate the SHA-256 hash of a file
