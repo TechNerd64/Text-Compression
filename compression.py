@@ -6,8 +6,13 @@ from colorama import Fore, Style, Back, just_fix_windows_console, init
 # Initialize colorama for Windows compatibility
 just_fix_windows_console()
 ## start color auto reset
-init(autoreset=True)
+init(autoreset=True, strip=False)
 
+def get_path(relative_path):
+    # Check if running as a compiled PyInstaller bundle
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, relative_path)
+    return os.path.join(os.path.abspath("."), relative_path)
 # Load character dictionary
 dictionary = []
 
@@ -92,10 +97,3 @@ def compare_file_sizes(original_file, compressed_file, word_reference_file, char
         print(f"Compressed file is " + Fore.YELLOW + f"{percentage:.2f}%" + Style.RESET_ALL + " of the original file size.")
     else:
         print(f"Compressed file is " + Fore.RED + f"{percentage:.2f}%" + Style.RESET_ALL + " of the original file size.")
-
-
-def get_path(relative_path):
-    # Check if running as a compiled PyInstaller bundle
-    if hasattr(sys, '_MEIPASS'):
-        return os.path.join(sys._MEIPASS, relative_path)
-    return os.path.join(os.path.abspath("."), relative_path)

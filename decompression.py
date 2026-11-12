@@ -4,7 +4,7 @@ import os
 from colorama import Fore, Style, Back, just_fix_windows_console, init
 # Initialize colorama for Windows compatibility
 just_fix_windows_console()
-init(autoreset=True)
+init(autoreset=True, strip=False)
 
 def load_references():
     # Check file existence

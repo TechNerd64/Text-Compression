@@ -4,7 +4,7 @@ import hashlib
 import compression
 import decompression
 from colorama import Fore, just_fix_windows_console, init
-init(autoreset=True)
+init(autoreset=True, strip=False)
 just_fix_windows_console()
 def main():
     print("Welcome to the Text Compression by TechNerd64")
