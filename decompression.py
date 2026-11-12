@@ -10,11 +10,13 @@ init(autoreset=True, strip=False)
 
 
 def get_path(relative_path):
-    # Check if running as a compiled PyInstaller bundle
-    if hasattr(sys, '_MEIPASS'):
-        return os.path.join(sys._MEIPASS, relative_path)
+    # Get the directory containing the executable or script
+    if getattr(sys, 'frozen', False):
+        base_path = os.path.dirname(sys.executable)
+    else:
+        base_path = os.path.dirname(os.path.abspath(__file__))
 
-    return os.path.join(os.path.dirname(os.path.abspath(__file__)), relative_path)
+    return os.path.join(base_path, relative_path)
 
 
 def output_path(relative_path):
@@ -25,7 +27,6 @@ def output_path(relative_path):
         base_path = os.path.dirname(os.path.abspath(__file__))
 
     return os.path.join(base_path, relative_path)
-
 
 def load_references():
     # Check file existence
