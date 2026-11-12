@@ -12,7 +12,7 @@ def main():
         if operation in ["compress", "decompress", "compare", "help"]:
             break
         else:
-            print(Fore.RED + "Invalid operation. Please choose from the options below vvv")
+            print(Fore.RED + "Invalid operation.  Please try again!")
             continue
     if operation == "compress":
         while True:
@@ -44,7 +44,7 @@ def main():
         print("- compress: Compress a text file.")
         print("- decompress: Decompress the previously compressed data.")
         print("- compare: Compare the original and decompressed files for integrity.")
-        print("- help: SShow this help message ;)")
+        print("- help: Shows this help message ;)")
 
 def get_hash(file_path):
     ## Calculate the SHA-256 hash of a file
