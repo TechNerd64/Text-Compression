@@ -47,3 +47,12 @@ So I came up with the idea around ~2 weeks ago, in which I wanted to build a Scr
 
 ## What was Challenging or New to me?
 There were certainly some new things I had to learn with this project, such as how to properly manage loaded files, terminal text color with colorama, and finally, how to compile project using pyinstaller while including something like dictionary.txt
+
+First of all, I had to expand the file manipulation systems I had learned in my PDF-Storage project to work with ".txt" files.  This meant learning how to not only write files, but also find and open them with minimal user input.  
+
+Secondly, I saw another project on GitHub which identifies AI-generated SB3 files, and I noticed that they got colored text to display on the terminal.  After some quick research, I fouind Colorama which is made to complete this task specifically.
+
+Lastly, I knew I would have to compile my python scripts into a Linux binary using pyinstaller, but I didn't know how to handle also packaging the "dictionary.txt" file with the binary.  So, I turned to AI to try to find a solution.  Thankfully, pyinstaller has a built-in flag for this:
+```bash
+--add-data <file.txt>
+```
