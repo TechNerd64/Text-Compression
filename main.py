@@ -27,12 +27,12 @@ def main():
 
             if os.path.isfile(file_path):
                 if not file_path.lower().endswith(".txt"):
-                    print("Error: The file must be a .txt file. Please try again.")
+                    print(Fore.RED + "Error: The file must be a .txt file. Please try again.")
                     continue
                 else:
                     break
             else:
-                print("Invalid file path. Please try again.")
+                print(Fore.RED + "Invalid file path. Please try again.")
 
         compression.compress(os.path.abspath(file_path))
 
