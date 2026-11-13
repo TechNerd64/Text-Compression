@@ -8,10 +8,10 @@ from colorama import Fore, just_fix_windows_console, init
 
 init(autoreset=True, strip=False)
 just_fix_windows_console()
-
+ORANGE_RGB = '\033[38;2;255;165;0m'
 
 def main():
-    print("Welcome to the Text Compression by TechNerd64")
+    print(f"Welcome to the Text Compression by{ORANGE_RGB} TechNerd64" + Fore.RESET)
 
     while True:
         operation = input("Enter operation (compress/decompress/compare/help): ").strip().lower()
